@@ -1,5 +1,5 @@
 
-### Escuela Colombiana de Ingeniería
+## Escuela Colombiana de Ingeniería
 ### Arquitecturas de Software - ARSW
 ## Ejercicio Introducción al paralelismo - Hilos - Caso BlackListSearch
 
