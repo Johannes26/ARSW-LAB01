@@ -6,6 +6,9 @@
 package edu.eci.arsw.blacklistvalidator;
 
 import edu.eci.arsw.spamkeywordsdatasource.HostBlacklistsDataSourceFacade;
+import edu.eci.arsw.threads.BlackListValidatorThread;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,17 +32,39 @@ public class HostBlackListsValidator {
      * @param ipaddress suspicious host's IP address.
      * @return  Blacklists numbers where the given host's IP address was found.
      */
-    public List<Integer> checkHost(String ipaddress){
+    public List<Integer> checkHost(String ipaddress, int n){
         
         LinkedList<Integer> blackListOcurrences=new LinkedList<>();
+        ArrayList<BlackListValidatorThread> hilos = new ArrayList<BlackListValidatorThread>();
         
         int ocurrencesCount=0;
         
         HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
         
         int checkedListsCount=0;
+        int totalServer= skds.getRegisteredServersCount();
         
-        for (int i=0;i<skds.getRegisteredServersCount() && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
+        for (int x=0; x<n; x++) {
+        	int limiteinf= x*(totalServer/n);
+        	int limitesup = ((x+1)*(totalServer/n))-1;
+        	BlackListValidatorThread t = new BlackListValidatorThread(ipaddress,limiteinf,limitesup);
+        	hilos.add(t);
+        	t.start();
+        }
+        
+        for (BlackListValidatorThread h : hilos){
+        	try {
+				h.join();
+				blackListOcurrences.addAll(h.getBlackListOcurrences());
+				checkedListsCount+= h.getCheckedListCount();
+				
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+        }
+        
+        
+        /*for (int i=0;i< totalServer && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
             checkedListsCount++;
             
             if (skds.isInBlackListServer(i, ipaddress)){
@@ -48,7 +73,7 @@ public class HostBlackListsValidator {
                 
                 ocurrencesCount++;
             }
-        }
+        }*/
         
         if (ocurrencesCount>=BLACK_LIST_ALARM_COUNT){
             skds.reportAsNotTrustworthy(ipaddress);
