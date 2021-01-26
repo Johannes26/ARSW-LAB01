@@ -72,15 +72,16 @@ Usando la API podemos identificar que se cuenta con 8 nucleos de procesamiento
 ### Preguntas 	❓
 1. Según la [ley de Amdahls](https://www.pugetsystems.com/labs/articles/Estimating-CPU-Performance-using-Amdahls-Law-619/#WhatisAmdahlsLaw?):
 
-	![](img/ahmdahls.png), donde _S(n)_ es el mejoramiento teórico del desempeño, _P_ la fracción paralelizable del algoritmo, y _n_ el número de hilos, a mayor _n_, mayor debería ser dicha mejora. Por qué el mejor desempeño no se logra con los 500 hilos?, cómo se compara este desempeño cuando se usan 200?. 
-
-## Respuesta1
+	![](img/ahmdahls.png), donde _S(n)_ es el mejoramiento teórico del desempeño, _P_ la fracción paralelizable del algoritmo, y _n_ el número de hilos, a mayor _n_, mayor debería ser dicha mejora. Por qué el mejor desempeño no se logra con los 500 hilos?, cómo se compara este desempeño cuando se usan 200?
+	
+Porque al tener en ejecucion tantos hilos es posible que durante la ejecucion se genere un cambio de contexto, lo que puede llevar a que el performance de la aplicacion afecte el rendimiento de velocidad. 
 
 2. Cómo se comporta la solución usando tantos hilos de procesamiento como núcleos comparado con el resultado de usar el doble de éste?.
 
-## Respuesta2
+Al comparar el resultado en nucleos de procesamiento, en nuestro caso 8 nucleos se puede ver que con respecto al doble de hilos (16) el rendimiento en velocidad aumenta aproximadamente el doble e comparacion con 8 hilos.
 
 3. De acuerdo con lo anterior, si para este problema en lugar de 100 hilos en una sola CPU se pudiera usar 1 hilo en cada una de 100 máquinas hipotéticas, la ley de Amdahls se aplicaría mejor?. Si en lugar de esto se usaran c hilos en 100/c máquinas distribuidas (siendo c es el número de núcleos de dichas máquinas), se mejoraría?. Explique su respuesta.
 
-## Respuesta3
+No seria mejor debido a que al implementarse en tantas maquinas, se estaaria generando un costo fisico adicional lo que generaria un incremento en la velocidad 
+
 		  
