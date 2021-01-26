@@ -34,7 +34,7 @@ public class BlackListValidatorThread extends Thread {
 				ocurrencesCount++;
 			}
 		}
-		System.out.println(ipfinish);
+		
 	}
 
 

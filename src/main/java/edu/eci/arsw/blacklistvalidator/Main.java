@@ -15,8 +15,11 @@ public class Main {
     
     public static void main(String a[]){
         HostBlackListsValidator hblv=new HostBlackListsValidator();
-        List<Integer> blackListOcurrences=hblv.checkHost("212.24.24.55", 5);
+        List<Integer> blackListOcurrences=hblv.checkHost("202.24.34.55", 200);
         System.out.println("The host was found in the following blacklists:"+blackListOcurrences);
+        Runtime run = Runtime.getRuntime(); 
+        // print the current free memory for this runtime 
+        System.out.println("" + Runtime.getRuntime().availableProcessors());
         
     }
     
